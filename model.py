@@ -17,7 +17,3 @@ def create_model(seq_length: int, units: int, dropout: float):
     )
 
     return model
-
-if __name__ == "__main__":
-    model = create_model(50, 4, 0.2)
-    print(model.summary())
