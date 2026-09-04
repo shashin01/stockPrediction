@@ -1,5 +1,11 @@
 import dataLoader as dl
 from model import create_model
+import numpy as np
+from pathlib import Path
+import joblib
+
+BASE_DIR = Path(__file__).resolve().parent 
+MODELS_PATH = BASE_DIR / "models"
 
 LSTM_UNITS = 50
 LSTM_DROPOUT = 0.2
@@ -20,8 +26,22 @@ def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epo
         verbose=1
     )
 
-    prediction = model.predict(X_test)
-    print(prediction)
+    predictions_scaled = model.predict(X_test)
+    predictions = scaler.inverse_transform(predictions_scaled)
+    actual = scaler.inverse_transform(y_test.reshape(-1,1))
+    error_rmse = float(np.sqrt(np.mean((predictions - actual)**2)))
+    print(f"RMSE: {error_rmse}")
+
+    ticker_path = MODELS_PATH / ticker
+    ticker_path.mkdir(exist_ok=True)
+
+    model_path = ticker_path / "model.keras"
+    scaler_path = ticker_path / "scaler.joblib"
+    meta_path = ticker_path / "meta.joblib"
+
+    model.save(model_path)
+    joblib.dump(scaler, scaler_path)
+    joblib.dump({"seq_length": seq_length, "start": start, "end": end, "interval": interval}, meta_path)
 
 if __name__== "__main__":
     train("AAPL", "2024-01-01", "2026-01-01", "1d", 60, 1, 10)

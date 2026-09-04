@@ -13,7 +13,7 @@ def create_model(seq_length: int, units: int, dropout: float):
 
     model.compile(
         optimizer=keras.optimizers.Adam(learning_rate=1e-3),
-        loss=keras.losses.MeanSquaredError
+        loss=keras.losses.MeanSquaredError()
     )
 
-    return model
+    return model 
