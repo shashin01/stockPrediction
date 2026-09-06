@@ -24,13 +24,16 @@ def forecast(ticker: str, days: int):
     model, scaler, meta = load_artifacts(ticker)
     seq_length = meta["seq_length"]
 
-    data = load_data(ticker, "2025-01-01", "2026-01-01", "1d")
+    data = load_data(ticker, "2024-01-01", "2026-09-01", "1d")
+    print(data["Close"].values[-10:])
     close_vals = data["Close"].values[-seq_length:].reshape(-1,1)
     scaled_vals = scaler.transform(close_vals).flatten().tolist()
 
     window = scaled_vals.copy()
     predictions_scaled = []
 
+    # The more days we predict for, the more inaccurate it gets 
+    # because it is predicting next days based on its own prediction
     for _ in range(days):
         x = np.array(window[-seq_length:]).reshape(1, seq_length, 1)
         next = model.predict(x)[0, 0]
@@ -39,8 +42,12 @@ def forecast(ticker: str, days: int):
 
     predictions = scaler.inverse_transform(np.array(predictions_scaled).reshape(-1, 1)).flatten()
 
-    print(predictions)
+    predicted_dates = pd.bdate_range(start=data.index[-1], periods=days+1)[1:]
+
+    last_known_price = float(data["Close"].values[-1])
+    print(f"Last known price on {predicted_dates[0].date()}: {last_known_price}")
+    for date, price in zip(predicted_dates, predictions):
+        print(f"{date.date()}: {price}")
 
 if __name__ == "__main__":
     forecast("AAPL", 10)
-
