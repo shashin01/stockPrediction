@@ -44,4 +44,4 @@ def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epo
     joblib.dump({"seq_length": seq_length, "start": start, "end": end, "interval": interval}, meta_path)
 
 if __name__== "__main__":
-    train("AAPL", "2024-01-01", "2026-09-01", "1d", 60, 1, 10)
+    train("GOOG", "2024-01-01", "2026-09-01", "1d", 60, 25, 10)

@@ -24,7 +24,7 @@ def forecast(ticker: str, days: int):
     model, scaler, meta = load_artifacts(ticker)
     seq_length = meta["seq_length"]
 
-    data = load_data(ticker, "2024-01-01", "2026-09-01", "1d")
+    data = load_data(ticker, "2024-01-01", "2026-05-01", "1d")
     print(data["Close"].values[-10:])
     close_vals = data["Close"].values[-seq_length:].reshape(-1,1)
     scaled_vals = scaler.transform(close_vals).flatten().tolist()
@@ -45,9 +45,9 @@ def forecast(ticker: str, days: int):
     predicted_dates = pd.bdate_range(start=data.index[-1], periods=days+1)[1:]
 
     last_known_price = float(data["Close"].values[-1])
-    print(f"Last known price on {predicted_dates[0].date()}: {last_known_price}")
+    print(f"Last known price on {predicted_dates[-1].date()}: {last_known_price}")
     for date, price in zip(predicted_dates, predictions):
         print(f"{date.date()}: {price}")
 
 if __name__ == "__main__":
-    forecast("AAPL", 10)
+    forecast("GOOG", 10)
