@@ -50,4 +50,6 @@ def forecast(ticker: str, days: int):
         print(f"{date.date()}: {price}")
 
 if __name__ == "__main__":
-    forecast("GOOG", 10)
+    ticker = input("Ticker: ")
+    days = input("Number of days to predict (more days increases inaccuracy): ")
+    forecast(ticker, days)

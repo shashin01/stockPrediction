@@ -44,4 +44,11 @@ def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epo
     joblib.dump({"seq_length": seq_length, "start": start, "end": end, "interval": interval}, meta_path)
 
 if __name__== "__main__":
-    train("GOOG", "2024-01-01", "2026-09-01", "1d", 60, 25, 10)
+    ticker = input("Ticker: ")
+    start = input("Start Date (YYYY-MM-DD): ")
+    end = input("End Date (YYYY-MM-DD): ")
+    interval = input("Sampling interval (number of days): ")
+    seq_length = input("Number of past days model looks at to predict (e.g. 60): ")
+    epochs = input("Epochs (e.g. 25): ")
+    batch_size = input("Batch size (e.g. 10): ")
+    train(ticker, start, end, interval + "d", seq_length, epochs, batch_size)
