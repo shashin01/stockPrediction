@@ -51,4 +51,4 @@ if __name__== "__main__":
     seq_length = input("Number of past days model looks at to predict (e.g. 60): ")
     epochs = input("Epochs (e.g. 25): ")
     batch_size = input("Batch size (e.g. 10): ")
-    train(ticker, start, end, interval + "d", seq_length, epochs, batch_size)
+    train(ticker, start, end, interval + "d", int(seq_length), int(epochs), int(batch_size))
