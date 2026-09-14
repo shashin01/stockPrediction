@@ -12,4 +12,10 @@ Usage details:
 2. Training the model for a specific ticker will save model, metadata and 
 sacler to 'models/TICKER/*'
 3. Run 'predict.py' and provide necessary configurations
-4.
+
+INVESTIGATION NOTES:
+1) Originally, I was trying to improve the accuracy of my model by running evaluation scripts 
+but I realised that I need to visualize loss over multiple epochs. 
+Looking at the actual prediction values shows potential for overfitting as well.
+Modified prediction script to see how loss is changing across epochs.
+Modification confirms overfitting, reducing the number of epochs was the best next step. 25 -> 5 epochs

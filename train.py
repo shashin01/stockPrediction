@@ -3,6 +3,7 @@ from model import create_model
 import numpy as np
 from pathlib import Path
 import joblib
+import matplotlib.pyplot as plt
 
 BASE_DIR = Path(__file__).resolve().parent 
 MODELS_PATH = BASE_DIR / "models"
@@ -10,7 +11,7 @@ MODELS_PATH = BASE_DIR / "models"
 LSTM_UNITS = 50
 LSTM_DROPOUT = 0.2
 
-def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epochs: int, batch_size: int):
+def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epochs: int, batch_size: int, plot: bool):
     data = dl.load_data(ticker, start, end, interval)
     print(f"Retrieved {len(data)} data points from {data.index[0].date()} to {data.index[-1].date()}")
 
@@ -25,6 +26,21 @@ def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epo
         batch_size=batch_size,
         verbose=1
     )
+
+    if plot:
+        # plotting loss
+        training_loss = history.history['loss']
+        validation_loss = history.history['val_loss']
+        epochs_label = range(1, len(training_loss) + 1)
+
+        plt.figure(figsize=(8,5))
+        plt.plot(epochs_label, training_loss, 'bo-', "Training Loss")
+        plt.plot(epochs_label, validation_loss, 'ro-', "Validation Loss")
+        plt.title(f"Loss Plot for {ticker}")
+        plt.ylabel("RMSE")
+        plt.xlabel("Epoch")
+        plt.legend()
+        plt.show()
 
     predictions_scaled = model.predict(X_test)
     predictions = scaler.inverse_transform(predictions_scaled)
@@ -41,7 +57,13 @@ def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epo
 
     model.save(model_path)
     joblib.dump(scaler, scaler_path)
-    joblib.dump({"seq_length": seq_length, "start": start, "end": end, "interval": interval}, meta_path)
+    metadata = {"seq_length": seq_length, 
+                "start": start, 
+                "end": end, 
+                "interval": interval,
+                "epochs": epochs,
+                "batch_size": batch_size}
+    joblib.dump(metadata, meta_path)
 
 if __name__== "__main__":
     ticker = input("Ticker: ")
@@ -51,4 +73,5 @@ if __name__== "__main__":
     seq_length = input("Number of past days model looks at to predict (e.g. 60): ")
     epochs = input("Epochs (e.g. 25): ")
     batch_size = input("Batch size (e.g. 10): ")
-    train(ticker, start, end, interval + "d", int(seq_length), int(epochs), int(batch_size))
+    plot = input("Plot loss chart (Y/N): ")
+    train(ticker, start, end, interval + "d", int(seq_length), int(epochs), int(batch_size), plot.upper() == "Y")
