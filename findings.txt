@@ -8,3 +8,8 @@ Training Configurations: (seq_length: 60, start: 2024-01-01, end: 2026-01-01, in
 
 _____________________
 
+LSTM, GOOG, evaluated from 2026-01-01 to 2026-09-01, RMSE = 19.4314, MAPE =  4.32% 
+Training Configurations: (seq_length: 60, start: 2024-01-01, end: 2026-01-01, interval: 1d, epochs: 10, batch_size: 10)
+
+_____________________
+

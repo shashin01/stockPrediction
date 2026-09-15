@@ -5,7 +5,7 @@ from pathlib import Path
 from dataLoader import load_data, create_sequences
 from tensorflow.keras.models import load_model
 
-BASE_DIR = Path(__file__).resolve().parent 
+BASE_DIR = Path(__file__).resolve().parent
 MODELS_PATH = BASE_DIR / "models"
 
 def evaluate(ticker: str, start: str, end: str, seq_length: int):
@@ -13,7 +13,7 @@ def evaluate(ticker: str, start: str, end: str, seq_length: int):
     model_path = ticker_path / "model.keras"
     scaler_path = ticker_path / "scaler.joblib"
     meta_path = ticker_path / "meta.joblib"
-    
+
     model = load_model(model_path)
     scaler = joblib.load(scaler_path)
     meta = joblib.load(meta_path)
@@ -32,7 +32,7 @@ def evaluate(ticker: str, start: str, end: str, seq_length: int):
     rmse = float(np.sqrt(np.mean((predictions - targets) ** 2)))
     mape = float(np.mean(np.abs(targets - predictions) / targets)*100)
 
-    findings = f"LSTM, {ticker}, evaluated from {start} to {end}, RMSE = {rmse:.4f}, MAPE = {mape: .2f}% \nTraining Configurations: (seq_length: {meta["seq_length"]}, start: {meta["start"]}, end: {meta["end"]}, interval: {meta["interval"]}, epochs: {meta["epochs"]}, batch_size: {meta["batch_size"]})\n\n_____________________\n\n"
+    findings = f"LSTM, {ticker}, evaluated from {start} to {end}, RMSE = {rmse:.4f}, MAPE = {mape: .2f}% \nTraining Configurations: (seq_length: {meta['seq_length']}, start: {meta['start']}, end: {meta['end']}, interval: {meta['interval']}, epochs: {meta['epochs']}, batch_size: {meta['batch_size']})\n\n_____________________\n\n"
     findings_path = BASE_DIR / "findings.txt"
 
     with open(findings_path, "a") as f:

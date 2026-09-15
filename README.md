@@ -18,4 +18,4 @@ INVESTIGATION NOTES:
 but I realised that I need to visualize loss over multiple epochs. 
 Looking at the actual prediction values shows potential for overfitting as well.
 Modified prediction script to see how loss is changing across epochs.
-Modification confirms overfitting, reducing the number of epochs was the best next step. 25 -> 5 epochs
+Modification confirms overfitting, worked on optimizing training configurations
