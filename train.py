@@ -4,8 +4,9 @@ import numpy as np
 from pathlib import Path
 import joblib
 import matplotlib.pyplot as plt
+from tensorflow.keras.callbacks import EarlyStopping
 
-BASE_DIR = Path(__file__).resolve().parent 
+BASE_DIR = Path(__file__).resolve().parent
 MODELS_PATH = BASE_DIR / "models"
 
 LSTM_UNITS = 50
@@ -19,12 +20,16 @@ def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epo
 
     model = create_model(seq_length, LSTM_UNITS, LSTM_DROPOUT)
 
+    early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True, verbose=1)
+
+
     history = model.fit(
         X_train, y_train,
         validation_data=(X_test, y_test),
         epochs=epochs,
         batch_size=batch_size,
-        verbose=1
+        verbose=1,
+        callbacks=[early_stopping]
     )
 
     if plot:
@@ -57,9 +62,9 @@ def train(ticker: str, start: str, end: str, interval: str, seq_length: int, epo
 
     model.save(model_path)
     joblib.dump(scaler, scaler_path)
-    metadata = {"seq_length": seq_length, 
-                "start": start, 
-                "end": end, 
+    metadata = {"seq_length": seq_length,
+                "start": start,
+                "end": end,
                 "interval": interval,
                 "epochs": epochs,
                 "batch_size": batch_size}

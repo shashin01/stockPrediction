@@ -17,5 +17,8 @@ INVESTIGATION NOTES:
 1) Originally, I was trying to improve the accuracy of my model by running evaluation scripts 
 but I realised that I need to visualize loss over multiple epochs. 
 Looking at the actual prediction values shows potential for overfitting as well.
-Modified prediction script to see how loss is changing across epochs.
+
+2) Modified prediction script to see how loss is changing across epochs.
 Modification confirms overfitting, worked on optimizing training configurations
+
+3) Added early stopping to avoid overfitting

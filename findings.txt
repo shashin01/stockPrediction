@@ -1,15 +1,21 @@
-LSTM, GOOG, from 2026-01-01 to 2026-09-01, RMSE = 27.1926, MAPE =  6.80% 
+LSTM, GOOG, from 2026-01-01 to 2026-09-01, RMSE = 27.1926, MAPE =  6.80%
 Training Configurations: (seq_length: 60, start: 2024-01-01, end: 2026-01-01, interval: 1d, epochs: 25, batch_size: 10)
 
 _____________________
- 
-LSTM, GOOG, evaluated from 2026-01-01 to 2026-09-01, RMSE = 52.6168, MAPE =  14.37% 
+
+LSTM, GOOG, evaluated from 2026-01-01 to 2026-09-01, RMSE = 52.6168, MAPE =  14.37%
 Training Configurations: (seq_length: 60, start: 2024-01-01, end: 2026-01-01, interval: 1d, epochs: 5, batch_size: 10)
 
 _____________________
 
-LSTM, GOOG, evaluated from 2026-01-01 to 2026-09-01, RMSE = 19.4314, MAPE =  4.32% 
+LSTM, GOOG, evaluated from 2026-01-01 to 2026-09-01, RMSE = 19.4314, MAPE =  4.32%
 Training Configurations: (seq_length: 60, start: 2024-01-01, end: 2026-01-01, interval: 1d, epochs: 10, batch_size: 10)
+
+_____________________
+
+LSTM, GOOG, evaluated from 2026-01-01 to 2026-09-01, RMSE = 20.3031, MAPE =  4.56%
+Training Configurations: (seq_length: 60, start: 2024-01-01, end: 2026-01-01, interval: 1d, epochs: 25, batch_size: 10)
+* Including early stopping. Similar results to previous run which was tested for 10 epochs.
 
 _____________________
 
