@@ -1,0 +1,10 @@
+
+INVESTIGATION NOTES:
+1) Originally, I was trying to improve the accuracy of my model by running evaluation scripts but I realised that I need to visualize loss over multiple epochs. Looking at the actual prediction values shows potential for overfitting as well.
+
+2) Modified prediction script to see how loss is changing across epochs. Modification confirms overfitting, worked on optimizing training configurations
+
+3) Added early stopping to avoid overfitting
+
+4) Model is making sensible predictions with this method but cannot handle anomalies (noticed while testing 2026-05-01) because it tends to stay close to mean.
+Attempt to improve model by looking at percentage change in stock prices instead of raw stock price data.

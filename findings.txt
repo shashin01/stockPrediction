@@ -18,4 +18,5 @@ Training Configurations: (seq_length: 60, start: 2024-01-01, end: 2026-01-01, in
 * Including early stopping. Similar results to previous run which was tested for 10 epochs.
 
 _____________________
-
+**Changed model to use percentage change instead of raw stock prices**
+_____________________

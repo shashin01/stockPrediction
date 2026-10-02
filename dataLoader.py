@@ -1,7 +1,6 @@
 import yfinance as yf
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
 def load_data(ticker: str, start: str, end: str, interval: str):
@@ -27,12 +26,12 @@ def create_sequences(values: np.ndarray, seq_length: int):
     return np.array(X), np.array(y)
 
 def process_data(data: pd.DataFrame, seq_length: int, train_split: float = 0.8):
-    closePrices = data["Close"].values.reshape(-1, 1)
+    percent_changes = data["Close"].pct_change().dropna().values.reshape(-1, 1)
 
     # Min/max normalization of data
-    # Use all data (training and testing) to scale data 
+    # Use all data (training and testing) to scale data
     scaler = MinMaxScaler(feature_range=(0, 1))
-    scaledPrices = scaler.fit_transform(closePrices)
+    scaledPrices = scaler.fit_transform(percent_changes)
 
     # trainData is the historical data up to the train_split
     # testData is the rest but need to start with the first seq_length to make the first prediction
